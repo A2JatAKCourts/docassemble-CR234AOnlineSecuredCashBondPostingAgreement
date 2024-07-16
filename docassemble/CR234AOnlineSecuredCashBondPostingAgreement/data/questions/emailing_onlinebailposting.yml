@@ -198,8 +198,9 @@ content: |
 ---
 code: |
   # recipient = get_config('cook after hours email')
+  user = users[0].email
   recipient = 'crobinsonatwork@gmail.com'
-  clerk_email_sent_ok = al_court_bundle.send_email(to=recipient, template=clerk_email)
+  clerk_email_sent_ok = al_court_bundle.send_email(to=recipient, reply_to=user, template=clerk_email)
 ---
 id: email confirmation page
 continue button field: email_sent
