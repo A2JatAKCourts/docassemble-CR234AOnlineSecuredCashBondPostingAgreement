@@ -1,0 +1,235 @@
+comment: |
+  https://raw.githubusercontent.com/IllinoisLegalAidOnline/docassemble-EmergencyOrderOfProtectionCookCounty/main/docassemble/EmergencyOrderOfProtectionCookCounty/data/questions/order_of_protection.yml
+---
+# interview order block
+code: |
+  forms_assembling
+  # snapshot_forms
+  get_docs_screen
+  if confirm_email_send_now:
+    # self_preparation  
+    # clerk_email_prep
+    if clerk_email_sent_ok:
+      # snapshot_email
+      email_sent
+    else:
+      email_not_sent
+  ending_screen
+  mailing_steps = True
+---
+id: forms assembling
+continue button field: forms_assembling
+question: |
+  Almost done
+subquestion: |
+  After you click **Next**, it will take a few moments to finish making your forms.
+  
+  ###### You do not need to refresh your screen. Hang in there!
+  
+  &nbsp;
+---
+id: are you sure
+question: |
+  Are you sure you want to email your forms to the clerk now?
+subquestion: |
+  When the court gets your form, they will email you. The email includes a link to the webpage where you can pay your/defendant's bail. 
+  
+  After you pay the full amount of 
+  % if person_filing == "obo":
+  ${ defendants[0].name.first }'s 
+  % else:
+  your
+  % endif
+  bail, the court will notify the facility that bail has been posted.
+  
+  And the facility will begin the process of releasing 
+  % if person_filing == "obo":
+  ${ defendants[0].name.first }
+  % else:
+  you
+  % endif
+  .
+  <div class = "">Note</div>
+  The court only processes requests to post bail online as follows:
+   
+  <table>
+  <th>
+  <tr>
+    <td>**in-custody defendants**</td>
+    <td>**out-of-custody defendants**</td>
+  </tr>
+  </th>
+  <tr>
+    <td>Monday through Friday: 8am to 4pm</td>
+    <td>Monday through Friday: 8am to 4pm</td>
+  </tr>
+  <tr>
+    <td>Saturday and Sunday: 10am – 3pm
+    <td> nbsp; </td>
+  </tr>
+  </table>
+  
+  
+  Thank you for using AKCourts Online Bail Posting form!
+  
+  
+  <div class="step-subheading">Note</div>
+  This may take several hours.
+  
+fields:
+  - "Send your form to the court now?": confirm_email_send_now
+    input type: radio
+    choices: 
+      - Yes, I want to email my form to the clerk now.: True
+      - No, I want to get my form now. I will file it later.: False
+
+
+under: | 
+  Online bail payments can be made with a VISA or MasterCard credit card or debit card. You cannot pay with an American Express or Discover card.
+
+  Each credit card transaction will be assessed a 3% convenience fee. If/when bail is later returned (exonerated) to the payer, the fee will not be returned.
+
+  If bail is more than $97,000, the person posting bail must make more than one payment until the total amount paid equals the total of bail. For example, if bail is $250,000, make three payments: Payment 1 = $95,000 + 3% fee, Payment 2 = $95,000 + 3% fee, and Payment 3= $60,000 + 3% fee. A single payment cannot exceed $99,999 including the 3% convenience fee.
+
+---
+id: get docs screen
+continue button field: get_docs_screen
+continue button label: ":file-export: Email your forms to the clerk"
+question: |
+  Download and email forms
+subquestion: |
+  Your forms are ready. View and download your forms.
+  
+  ${ al_user_bundle.download_list_html() }
+
+  &nbsp;
+
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+
+  **Note:** If you want to , click **Email your forms to the clerk**.
+
+  
+---
+id: email preview
+continue button field: email_preview
+question: |
+  Email contents
+subquestion: |
+  email subject:
+  Online Secured Cash Bond Posting Agreement - AKCourts Easy Form - ${ users[0].name.full(middle="full") } 
+  
+  [NEWLINE]
+  Mail body: 
+  ${ users[0].name.full(middle="full") } is requesting a link to pay
+  % if person_filing == "obo":
+  ${ defendants[0].name.full(middle="full") }'s 
+  % else:
+  their
+  % endif
+  bail online.
+  
+  % if person_filing == "obo":
+  ${ defendants[0].name.full(middle="full")  }'s friend or family member"s 
+  % else:
+  Their
+  % endif
+  email address is: ${ users[0].email}
+---
+id: ending screen
+event: ending_screen
+question: |
+  Download forms
+subquestion: |
+  Your forms are ready. View and download your forms below. 
+
+  % if clerk_email_sent_ok:
+  **Note:** Your forms were already emailed to the clerk.
+  % else:
+  **Note:** Your forms were not emailed to the clerk.
+  % endif
+  
+  ${ al_user_bundle.download_list_html() }
+
+  &nbsp;
+
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+
+  % if clerk_email_sent_ok:
+  **Note:** Your forms were already emailed to the clerk.
+  % else:
+  **Note:** Your forms were not emailed to the clerk.
+  % endif
+
+  Thank you for using AKCourts Easy Forms!
+under: |
+  ###### **Questions?**  
+  ###### If you are wondering about the status of your request to post bail online for an individual, you can send an email inquiry to onlinebailposting@akcourts.gov. Please keep in mind that the court can only reply to the emails during the processing hours listed above. The court replies to all emails as quickly as possible and appreciates your patience.
+  
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+template: al_user_bundle.send_email_template
+subject: |
+  Your forms
+content: |
+  Your forms are attached.
+  
+  If you are wondering about the status of your request to post bail online for an individual, you can send an email inquiry to [onlinebailposting@akcourts.gov](mailto:onlinebailposting@akcourts.gov). Please keep in mind that the court can only reply to the emails during the processing hours listed above. The court replies to all emails as quickly as possible and appreciates your patience.
+  
+  Thanks for using AKCourt's Access to Justice Easy Forms!
+  
+ 
+---
+template: clerk_email
+subject: |
+  Online Secured Cash Bond Posting Agreement - AKCourts Easy Form - ${ users[0].name.full(middle="full") } 
+content: |
+  ${ users[0].name.full(middle="full") } is requesting a link to pay
+  % if person_filing == "obo":
+  ${ defendants[0].name.full(middle="full") }'s 
+  % else:
+  their
+  % endif
+  bail online.
+  
+  
+  Their  email address is: ${ users[0].email}
+---
+code: |
+  # recipient = get_config('cook after hours email')
+  recipient = 'crobinsonatwork@gmail.com'
+  clerk_email_sent_ok = al_court_bundle.send_email(to=recipient, template=clerk_email)
+---
+id: email confirmation page
+continue button field: email_sent
+question: |
+  Email sent to clerk
+subquestion: |
+  **Your forms were sent to the court.**
+  
+  If you sent them in time , they will contact you . If you sent them outside these times frame, you may need to follow up.
+
+  **Important:** Read the "Next steps" document for what to do next. 
+
+  If you did not download your forms yet, click **Next**. It may take a minute to get to the next screen. You do not need to refresh.
+
+ 
+  Thank you for using AKCourt's Access to Justice Easy Forms!
+
+---
+id: email send error
+continue button field: email_not_sent
+question: |
+  Email error
+subquestion: |
+  **Your form was not sent to the court.**
+
+  Click **Back** to try again or download your form and email it to: onlinebailposting@akcourts.gov
+  
+  Thank you for using AKCourt's Access to Justice Easy Forms!
+
+ 
+  
+
+---
