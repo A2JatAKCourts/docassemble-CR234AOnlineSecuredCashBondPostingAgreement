@@ -70,13 +70,12 @@ code: |
   if person_filing == "obo":
     def_first_name
   users[0].name.first
-  user_mailing_address
+  user_email
   if read_cr233 == "read_no":
     kickout_cr233
   if money_for_bonds == "money_no":
     kickout_money
   money_deposit
-  money_deposit_choices
   if send_check == "check_no":
     kickout_check  
   if person_filing == "obo":
@@ -100,13 +99,14 @@ continue button field: cr234_intro
 question: |
   ## Online secured Cash Bond Posting Agreement
 subquestion: |
-  ## How does this work?
-
-  1. The interview style form will ask you questions and create forms for you.
-  2. Print the forms and file them at the courthouse.
-  3. After the court has your forms, the court clerk will contact you.
+  ## Instructions:
   
-  * You may email a copy to yourself and print it later.
+  1.  Answer the interview questions.  Your responses to the questions will be used to create forms for you.
+  2. Download the forms to file them electronically through TrueFiling ,
+  or 
+  print the forms to file them at the courthouse.
+  
+  * You may also email a copy of the forms to yourself and print them later.
 ---
 id: user role
 question: |
@@ -129,7 +129,7 @@ fields:
     required: False
   - Last Name: users[0].name.last
     required: True
-  - Date of Birth: user_dob
+  - Date of Birth: users[0].birthdate
     datatype: date
     required: True
 ---
@@ -137,8 +137,9 @@ id: User's Information 2
 question: |
   Your Information:
 fields:
-  - Mailing Address: user_mailing_address
+  - Mailing Address: users[0].mailing_address.on_one_line
     required: True
+    input type: area
     hint: street address, state, zip
   - Email: user_email
     required: True
@@ -213,13 +214,13 @@ fields:
 code: |
   if person_filing == "obo":
     money_deposit_choices = [
-      {"the court may use the money I deposit to pay ${ def_first_name }'s fine, judgment, or costs."},
-      {"the court may **not** use the money I deposit to pay ${ def_first_name }'s fine, judgment, or costs."}
+      {'may': f"The court may use the money I deposit to pay { def_first_name }'s fine, judgment, or costs."},
+      {'may not': f"The court may **not** use the money I deposit to pay { def_first_name }'s fine, judgment, or costs."}
                 ]
   else:
     money_deposit_choices = [
-      {"the court may use the money I deposit to pay the defendants fine, judgment, or costs."},
-      {"the court may **not** use the money I deposit to pay my fine, judgment, or costs."}
+     {'may': "The court may use the money I deposit to pay my fine, judgment, or costs."},
+     {'may not': "The court may **not** use the money I deposit to pay my fine, judgment, or costs."}
                 ]
 ---
 id: canceled or refunded bond
@@ -279,6 +280,7 @@ validation code: |
   if not custody_obo:
     validation_error("You cannot continue until you agree.")
 ---
+id: Update Contact Info
 question: |
   ####I will tell the court in writing if my email, phone number, or mailing address changes. [Use form [TF-955](https://public.courts.alaska.gov/web/forms/docs/TF-955.pdf).]
 fields:
