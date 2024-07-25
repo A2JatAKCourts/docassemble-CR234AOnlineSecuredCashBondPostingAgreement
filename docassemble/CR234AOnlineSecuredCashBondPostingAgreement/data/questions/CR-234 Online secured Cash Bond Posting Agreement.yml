@@ -71,13 +71,9 @@ code: |
     def_first_name
   users[0].name.first
   user_email
-  if read_cr233 == "read_no":
-    kickout_cr233
   if money_for_bonds == "money_no":
     kickout_money
-  money_deposit
-  if send_check == "check_no":
-    kickout_check  
+  money_deposit 
   if person_filing == "obo":
    forfeit_deposit_obo
   else:
@@ -97,16 +93,11 @@ code: |
 id: CR234
 continue button field: cr234_intro
 question: |
-  ## Online secured Cash Bond Posting Agreement
+  ##CR-234 Online Secured Cash Bond Posting Agreement
 subquestion: |
   ## Instructions:
-  
-  1.  Answer the interview questions.  Your responses to the questions will be used to create forms for you.
-  2. Download the forms to file them electronically through TrueFiling ,
-  or 
-  print the forms to file them at the courthouse.
-  
-  * You may also email a copy of the forms to yourself and print them later.
+  1.  Answer the interview questions.  Your responses to the questions will be used to create the form for you.
+  2. At the end of the interview, hit “submit” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
 ---
 id: user role
 question: |
@@ -166,17 +157,13 @@ fields:
 ---
 id: read CR-233
 question: |
-  ####I read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to me by the court.
-field: read_cr233
-buttons:
-  - Yes: read_yes
-  - No: read_no
----
-id: Kickout Read CR-233
-event: kickout_cr233
-question: |
-  ###REWORD?: In order to submit this form you must agree that:
-  You read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to you by the court.
+  ####I read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to me by the court.      
+fields:
+  - I understand and agree.: read_cr233
+    datatype: yesnowide
+validation code: |
+  if not read_cr233:
+    validation_error("You cannot continue until you agree.")  
 ---     
 id: money
 question: |
@@ -188,14 +175,6 @@ buttons:
 subquestion: |
   1. I am depositing money as security for my bonds.
   2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to me, this fee will not be returned.
-  3. The bonds continue until the court cancels them.
----
-id: Kickout Money
-event: kickout_money
-question: |
-  ###REWORD?: In order to submit this form you must agree and understand that:
-  1. You are depositing money as security for your bonds.
-  2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to you, this fee will not be returned.
   3. The bonds continue until the court cancels them.
 ---
 id: Money Deposit
@@ -225,29 +204,23 @@ code: |
 ---
 id: canceled or refunded bond
 question: |
-  Do you understand and agree to the following?
-field: send_check
-buttons:
-  - Yes: check_yes
-  - No: check_no
-subquestion: |
-  The court will send me a check for the canceled bond money at the address I provide.  The money will **not** be refunded on the original credit card used to post the bond.  If I post the bond using another person’s credit card, the refund will go to me, not the holder of the credit card.  I am responsible for telling the credit card holder about this before I pay the bond. 
----
-id: Form Kickout Check
-event: kickout_check
-question: |
-  ###REWORD?: In order to submit this form you must agree and understand that:
-  The court will send me a check for the canceled bond money at the address I provide.  The money will **not** be refunded on the original credit card used to post the bond.  If I post the bond using another person’s credit card, the refund will go to me, not the holder of the credit card.  I am responsible for telling the credit card holder about this before I pay the bond.
+  ####The court will send me a check for the canceled bond money at the address I provide.  The money will **not** be refunded on the original credit card used to post the bond.  If I post the bond using another person’s credit card, the refund will go to me, not the holder of the credit card.  I am responsible for telling the credit card holder about this before I pay the bond.      
+fields:
+  - I understand and agree.: send_check
+    datatype: yesnowide
+validation code: |
+  if not send_check:
+    validation_error("You cannot continue until you agree.")
 ---
 id: bond conditions defendant
 question: |
-  Do you understand and agree to the following?
-field: forfeit_deposit_def
-buttons:
-  - Yes: forfeit_def_yes
-  - No: forfeit_def_no
-subquestion: |
-  **If I do not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  The court will send me notice of forfeiture to the mailing or email address I provide. 
+  ####**If I do not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  The court will send me notice of forfeiture to the mailing or email address I provide.     
+fields:
+  - I understand and agree.: forfeit_deposit_def
+    datatype: yesnowide
+validation code: |
+  if not forfeit_deposit_def:
+    validation_error("You cannot continue until you agree.") 
 ---
 mandatory: True
 id: bond conditions obo
