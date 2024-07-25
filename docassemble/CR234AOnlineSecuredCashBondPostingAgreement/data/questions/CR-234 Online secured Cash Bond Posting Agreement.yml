@@ -71,8 +71,6 @@ code: |
     def_first_name
   users[0].name.first
   user_email
-  if money_for_bonds == "money_no":
-    kickout_money
   money_deposit 
   if person_filing == "obo":
    forfeit_deposit_obo
