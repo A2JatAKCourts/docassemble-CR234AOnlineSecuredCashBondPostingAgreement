@@ -164,18 +164,23 @@ fields:
 validation code: |
   if not read_cr233:
     validation_error("You cannot continue until you agree.")  
----     
+---
 id: money
 question: |
-  Do you understand and agree to the following?
-field: money_for_bonds
-buttons:
-  - Yes: money_yes
-  - No: money_no
-subquestion: |
-  1. I am depositing money as security for my bonds.
+  ####Do you understand and agree to the following?
+  % if person_filing == "obo":
+  1.	I am depositing money as security for the defendant’s bonds.
+  % else:
+  1.	I am depositing money as security for my bonds.
+  % endif
   2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to me, this fee will not be returned.
   3. The bonds continue until the court cancels them.
+fields:
+  - I understand and agree.: money_for_bonds
+    datatype: yesnowide
+validation code: |
+  if not money_for_bonds:
+    validation_error("You cannot continue until you agree.")  
 ---
 id: Money Deposit
 question: |
