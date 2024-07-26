@@ -5,7 +5,9 @@ comment: |
 code: |
   forms_assembling
   # snapshot_forms
+  log('before get_docs_screen', 'console')
   get_docs_screen
+  log(recaptcha_success, 'console')
   if confirm_email_send_now:
     # self_preparation  
     # clerk_email_prep
@@ -34,6 +36,14 @@ continue button label: ":file-export: Email your forms to the clerk"
 question: |
   Download and email forms
 subquestion: |
+  % if recaptcha_success:
+  To court (this is where the court email goes):
+
+  ${ "court email code" }
+  % else:
+  No court email is available.
+  % endif
+
   Your forms are ready. View and download your forms.
   
   ${ al_user_bundle.download_list_html() }
