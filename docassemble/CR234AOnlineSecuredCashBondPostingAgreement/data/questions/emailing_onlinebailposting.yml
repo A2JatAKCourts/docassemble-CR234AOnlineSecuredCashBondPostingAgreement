@@ -28,70 +28,6 @@ subquestion: |
   
   &nbsp;
 ---
-id: are you sure
-question: |
-  Are you sure you want to email your forms to the clerk now?
-subquestion: |
-  When the court gets your form, they will email you. The email includes a link to the webpage where you can pay your/defendant's bail. 
-  
-  After you pay the full amount of 
-  % if person_filing == "obo":
-  ${ defendants[0].name.first }'s 
-  % else:
-  your
-  % endif
-  bail, the court will notify the facility that bail has been posted.
-  
-  And the facility will begin the process of releasing 
-  % if person_filing == "obo":
-  ${ defendants[0].name.first }
-  % else:
-  you
-  % endif
-  .
-  <div class = "">Note</div>
-  The court only processes requests to post bail online as follows:
-   
-  <table>
-  <th>
-  <tr>
-    <td>**in-custody defendants**</td>
-    <td>**out-of-custody defendants**</td>
-  </tr>
-  </th>
-  <tr>
-    <td>Monday through Friday: 8am to 4pm</td>
-    <td>Monday through Friday: 8am to 4pm</td>
-  </tr>
-  <tr>
-    <td>Saturday and Sunday: 10am – 3pm
-    <td> nbsp; </td>
-  </tr>
-  </table>
-  
-  
-  Thank you for using AKCourts Online Bail Posting form!
-  
-  
-  <div class="step-subheading">Note</div>
-  This may take several hours.
-  
-fields:
-  - "Send your form to the court now?": confirm_email_send_now
-    input type: radio
-    choices: 
-      - Yes, I want to email my form to the clerk now.: True
-      - No, I want to get my form now. I will file it later.: False
-
-
-under: | 
-  Online bail payments can be made with a VISA or MasterCard credit card or debit card. You cannot pay with an American Express or Discover card.
-
-  Each credit card transaction will be assessed a 3% convenience fee. If/when bail is later returned (exonerated) to the payer, the fee will not be returned.
-
-  If bail is more than $97,000, the person posting bail must make more than one payment until the total amount paid equals the total of bail. For example, if bail is $250,000, make three payments: Payment 1 = $95,000 + 3% fee, Payment 2 = $95,000 + 3% fee, and Payment 3= $60,000 + 3% fee. A single payment cannot exceed $99,999 including the 3% convenience fee.
-
----
 id: get docs screen
 continue button field: get_docs_screen
 continue button label: ":file-export: Email your forms to the clerk"
@@ -169,6 +105,72 @@ buttons:
   - Exit: exit
   - Restart: restart
 ---
+
+---
+id: are you sure
+question: |
+  Are you sure you want to email your forms to the clerk now?
+subquestion: |
+  When the court gets your form, they will email you. The email includes a link to the webpage where you can pay your/defendant's bail. 
+  
+  After you pay the full amount of 
+  % if person_filing == "obo":
+  ${ defendants[0].name.first }'s 
+  % else:
+  your
+  % endif
+  bail, the court will notify the facility that bail has been posted.
+  
+  And the facility will begin the process of releasing 
+  % if person_filing == "obo":
+  ${ defendants[0].name.first }
+  % else:
+  you
+  % endif
+  .
+  <div class = "">Note</div>
+  The court only processes requests to post bail online as follows:
+   
+  <table>
+  <th>
+  <tr>
+    <td>**in-custody defendants**</td>
+    <td>**out-of-custody defendants**</td>
+  </tr>
+  </th>
+  <tr>
+    <td>Monday through Friday: 8am to 4pm</td>
+    <td>Monday through Friday: 8am to 4pm</td>
+  </tr>
+  <tr>
+    <td>Saturday and Sunday: 10am – 3pm
+    <td> nbsp; </td>
+  </tr>
+  </table>
+  
+  
+  Thank you for using AKCourts Online Bail Posting form!
+  
+  
+  <div class="step-subheading">Note</div>
+  This may take several hours.
+  
+fields:
+  - "Send your form to the court now?": confirm_email_send_now
+    input type: radio
+    choices: 
+      - Yes, I want to email my form to the clerk now.: True
+      - No, I want to get my form now. I will file it later.: False
+
+
+under: | 
+  Online bail payments can be made with a VISA or MasterCard credit card or debit card. You cannot pay with an American Express or Discover card.
+
+  Each credit card transaction will be assessed a 3% convenience fee. If/when bail is later returned (exonerated) to the payer, the fee will not be returned.
+
+  If bail is more than $97,000, the person posting bail must make more than one payment until the total amount paid equals the total of bail. For example, if bail is $250,000, make three payments: Payment 1 = $95,000 + 3% fee, Payment 2 = $95,000 + 3% fee, and Payment 3= $60,000 + 3% fee. A single payment cannot exceed $99,999 including the 3% convenience fee.
+
+---
 template: al_user_bundle.send_email_template
 subject: |
   Your forms
@@ -226,11 +228,48 @@ question: |
 subquestion: |
   **Your form was not sent to the court.**
 
-  Click **Back** to try again or download your form and email it to: onlinebailposting@akcourts.gov
+  Click **Back** to try again or download your form and email it to: [onlinebailposting@akcourts.gov](mailto:onlinebailposting@akcourts.gov)
   
   Thank you for using AKCourt's Access to Justice Easy Forms!
-
- 
-  
-
 ---
+# This must be in Docassemble YAML due to limits in how Docassemble
+# searches for events. It also somewhat safer to limit the scope of what
+# events can be triggered by JS
+# important 
+generic object: ALDocumentBundle
+event: x.send_email_action_event
+code: |
+  # important to match case in email addresses below!
+  if 'crobinsonatwork@gmail.com' in action_argument('email') or 'AKCourts.gov' in action_argument('email'):
+    email_success = x.send_email(
+        to=action_argument('email'),
+        editable=action_argument('editable'),
+        template=(
+          value(action_argument('template_name'))
+          if action_argument('template_name')
+          else None
+        ),
+        key=action_argument('key')
+    )
+  else:
+    email_success = x.send_email(
+        to=action_argument('email'),
+        # replace carogray email below with the court email address user should reply to.
+        reply_to = "carogray_1999@yahoo.com",
+        editable=action_argument('editable'),
+        template=(
+          value(action_argument('template_name'))
+          if action_argument('template_name')
+          else None
+        ),
+        key=action_argument('key')
+    )
+  if email_success:
+    # Exact phrase below is in Docassemble's words dictionary
+    log(word('E-mail was sent to') + ' ' + action_argument('email') ,'success')
+  else:
+    # E-mail failed is not in the default Docassemble words dictionary
+    log(word('E-mail failed'), 'error')
+---
+
+

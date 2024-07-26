@@ -5,7 +5,7 @@ include:
   - docassemble.AssemblyLine:assembly_line.yml
   - docassemble.AKA2JBranding:custom_organization.yml
   - docassemble.ALToolbox:escape_button.yml
-  # - docassemble.AKA2JBranding:recaptcha.yml
+  - docassemble.AKA2JBranding:recaptcha.yml
   # - recaptcha.yml
   - emailing_onlinebailposting.yml
 ---
@@ -318,7 +318,10 @@ subquestion: |
   ${ action_button_html(url_action('review_Cr234a_online_secured_cash_bond_posting_agreement_524'), label='Edit answers', color='info') }
   
   Remember to come back to this window to continue and sign your form.
-continue button field: preview_screen    
+continue button field: preview_screen
+script: |
+
+  ${ recaptcha_javascript() }
 ---
 code: |
   signature_fields = ['users[0].signature']
@@ -434,9 +437,13 @@ subquestion: |
   
   ${ al_user_bundle.download_list_html() }
   
-  if recaptcha_success:
-  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
-  endif
+  % if recaptcha_success:
+    To court (this is where the court email goes):
+
+  
+
+  ${ "court email code" }
+  % endif
 
 progress: 100
 ---
