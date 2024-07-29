@@ -5,8 +5,7 @@ include:
   - docassemble.AssemblyLine:assembly_line.yml
   - docassemble.AKA2JBranding:custom_organization.yml
   - docassemble.ALToolbox:escape_button.yml
-  #- docassemble.AKA2JBranding:recaptcha.yml
-  - recaptcha.yml
+  - docassemble.AKA2JBranding:recaptcha.yml
   - emailing_onlinebailposting.yml
 ---
 metadata:
@@ -70,7 +69,7 @@ id: Interview Order
 code: |
   # Set the allowed courts for this interview
   allowed_courts = []
-  # nav.set_section("review_Cr234a_online_secured_cash_bond_posting_agreement_524")
+  ## nav.set_section("review_Cr234a_online_secured_cash_bond_posting_agreement_524")
   cr234_intro
   if person_filing == "obo":
     defendants[0].birthdate
@@ -81,6 +80,7 @@ code: |
   # read_cr233
   # money_for_bonds
   money_deposit
+  
   #if person_filing == "obo":
   # money_deposit_obo
   #else:
@@ -96,9 +96,7 @@ code: |
   #  custody_def
   # contact_info_change
   # target_variable
-  log('before preview_screen', 'console')
   preview_screen
-  log(recaptcha_success, 'console')
   basic_questions_signature_flow
   signature_date
   mailing_steps
@@ -319,8 +317,6 @@ subquestion: |
   
   Remember to come back to this window to continue and sign your form.
 continue button field: preview_screen
-script: |
-  ${ recaptcha_javascript() }
 ---
 code: |
   signature_fields = ['users[0].signature']

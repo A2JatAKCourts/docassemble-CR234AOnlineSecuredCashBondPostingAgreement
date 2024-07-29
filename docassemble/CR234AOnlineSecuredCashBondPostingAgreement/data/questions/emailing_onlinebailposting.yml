@@ -5,9 +5,7 @@ comment: |
 code: |
   forms_assembling
   # snapshot_forms
-  log('before get_docs_screen', 'console')
   get_docs_screen
-  log(recaptcha_success, 'console')
   if confirm_email_send_now:
     # self_preparation  
     # clerk_email_prep
@@ -29,6 +27,8 @@ subquestion: |
   ###### You do not need to refresh your screen. Hang in there!
   
   &nbsp;
+script: |
+  ${ recaptcha_javascript() }
 ---
 id: get docs screen
 continue button field: get_docs_screen
@@ -36,13 +36,6 @@ continue button label: ":file-export: Email your forms to the clerk"
 question: |
   Download and email forms
 subquestion: |
-  % if recaptcha_success:
-  To court (this is where the court email goes):
-
-  ${ "court email code" }
-  % else:
-  No court email is available.
-  % endif
 
   Your forms are ready. View and download your forms.
   
@@ -51,10 +44,19 @@ subquestion: |
   &nbsp;
 
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
-
+  
   **Note:** If you want to , click **Email your forms to the clerk**.
 
+  (placeholder note to developer) If you want to return the choice to what it was before, you might be able to do it this way:
   
+  % if recaptcha_success:
+  % if defined('clerk_email_sent_ok') and clerk_email_sent_ok:
+  **Note:** Your forms were already emailed to the clerk.
+  % else:
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+  % endif
+  
+  % endif
 ---
 id: email preview
 continue button field: email_preview
