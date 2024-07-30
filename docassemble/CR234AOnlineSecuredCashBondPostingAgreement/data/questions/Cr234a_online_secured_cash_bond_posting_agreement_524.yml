@@ -5,7 +5,8 @@ include:
   - docassemble.AssemblyLine:assembly_line.yml
   - docassemble.AKA2JBranding:custom_organization.yml
   - docassemble.ALToolbox:escape_button.yml
-  - docassemble.AKA2JBranding:recaptcha.yml
+  #- docassemble.AKA2JBranding:recaptcha.yml
+  - recaptcha.yml
   - emailing_onlinebailposting.yml
 ---
 metadata:
