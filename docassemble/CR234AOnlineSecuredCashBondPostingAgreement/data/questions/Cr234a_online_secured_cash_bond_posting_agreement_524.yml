@@ -11,7 +11,7 @@ metadata:
   short title: >-
     CR-234
   description: |-
-    Online secured Cash Bond Posting Agreement
+    Online secured Cash Bond Posting Agreement 
   can_I_use_this_form: |
     If you are a defendant, or someone posting for a defendant, you can use this interview to post bail online.
   before_you_start: |
@@ -104,7 +104,7 @@ question: |
 subquestion: |
   ## Instructions:
   1.  Answer the interview questions.  Your responses to the questions will be used to create the form for you.
-  2. At the end of the interview, hit “submit” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
+  2. At the end of the interview, click “Email your forms to the clerk” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
 ---
 id: user role
 question: |
