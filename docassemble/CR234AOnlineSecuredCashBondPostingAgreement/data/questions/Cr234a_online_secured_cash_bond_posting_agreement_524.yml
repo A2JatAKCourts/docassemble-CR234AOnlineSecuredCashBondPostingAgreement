@@ -78,12 +78,12 @@ code: |
   users[0].phone_number
   read_cr233
   money_for_bonds
-  money_deposit 
+  money_deposit
+  send_check
   if person_filing == "obo":
    forfeit_deposit_obo
   else:
    forfeit_deposit_def
-  send_check
   if person_filing == "obo":
    custody_obo
   else:
@@ -103,7 +103,7 @@ question: |
   ##CR-234 Online Secured Cash Bond Posting Agreement
 subquestion: |
   ## Instructions:
-  1.  Answer the interview questions.  Your responses to the questions will be used to create the form for you.
+  1.  Answer the interview questions.  Your responses to the questions will be used to create the agreement form for you.
   2. At the end of the interview, click “Email your forms to the clerk” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
 ---
 id: user role
@@ -119,7 +119,7 @@ fields:
 ---
 id: User's Information
 question: |
-  Your Information:
+  My Information:
 fields:
   - First Name: users[0].name.first
     required: True
@@ -133,12 +133,16 @@ fields:
 ---
 id: User's Information 2
 question: |
-  Your Information:
+  My Information:
 fields:
-  - Mailing Address: users[0].mailing_address.on_one_line
+  - Street Address: users[0].mailing_address.on_one_line
     required: True
-    input type: area
-    hint: street address, state, zip
+  - City: users[0].city
+    required: True
+  - State: users[0].state
+    required: True
+  - Zip: users[0].zip
+    required: True
   - Email: users[0].email
     required: True
   - Cell Phone: users[0].mobile_phone
@@ -163,14 +167,13 @@ fields:
     required: True
 ---
 id: read CR-233
-question: |
-  ####I read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to me by the court.      
+question: |     
 fields:
-  - I understand and agree.: read_cr233
+  - I read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to me by the court.: read_cr233
     datatype: yesnowide
 validation code: |
   if not read_cr233:
-    validation_error("You cannot continue until you agree.")  
+    validation_error("You cannot continue until you have seleceted that you have read the CR-233.")  
 ---
 id: money
 question: |
@@ -314,8 +317,14 @@ subquestion: |
  
   ${ al_user_bundle.download_list_html() }
   
-
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+  % if recaptcha_success:
+
+  To court (this is where the court email goes):
+
+  ${ "court email code" }
+
+  % endif
 
 progress: 100
 comment: |

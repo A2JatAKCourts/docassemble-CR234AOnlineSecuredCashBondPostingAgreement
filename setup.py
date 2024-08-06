@@ -44,7 +44,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.CR234AOnlineSecuredCashBondPostingAgreement',
-      version='24.7.25',
+      version='24.8.06',
       description=('CR-234'),
       long_description='# docassemble.Cr234AOnlineSecuredCashBondPostingAgreement524\r\n\r\nCR-234\r\n\r\n## Author\r\n\r\nACS\r\n\r\n',
       long_description_content_type='text/markdown',
@@ -54,7 +54,7 @@ setup(name='docassemble.CR234AOnlineSecuredCashBondPostingAgreement',
       url='https://courtformsonline.org',
       packages=find_packages(),
       namespace_packages=['docassemble'],
-      install_requires=['docassemble.AssemblyLine>=2.28.1'],
+      install_requires=['docassemble.AssemblyLine>=3.0.1'],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/CR234AOnlineSecuredCashBondPostingAgreement/', package='docassemble.CR234AOnlineSecuredCashBondPostingAgreement'),
      )
