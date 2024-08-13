@@ -7,7 +7,7 @@ include:
 ---
 metadata:
   title: >-
-    CR-234 Online secured Cash Bond Posting Agreement
+    CR-234 Online Secured Cash Bond Posting Agreement
   short title: >-
     CR-234
   description: |-
@@ -19,7 +19,7 @@ metadata:
   maturity: production
   estimated_completion_minutes: 60
   estimated_completion_delta: 30
-  tags: []
+  tags: [] 
   authors:
     - ACS
   original_form: []
@@ -70,12 +70,12 @@ code: |
   user_role = "defendant"
   user_ask_role = "defendant"
   cr234_intro
+  users[0].name.first
+  users[0].phone_number
   if person_filing == "obo":
     defendants[0].birthdate
   user_role = person_filing
   user_ask_role = person_filing
-  users[0].name.first
-  users[0].phone_number
   read_cr233
   money_for_bonds
   money_deposit
@@ -105,17 +105,6 @@ subquestion: |
   ## Instructions:
   1.  Answer the interview questions.  Your responses to the questions will be used to create the agreement form for you.
   2. At the end of the interview, click “Email your forms to the clerk” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
----
-id: user role
-question: |
-  I am:
-fields:
-  - no label: person_filing
-    required: True
-    datatype: radio
-    choices:
-      - "the defendant posting my own bonds.": defendant
-      - "someone else posting on the defendant's behalf.": obo
 ---
 id: User's Information
 question: |
@@ -151,6 +140,17 @@ fields:
     required: false
   - Home Phone: users[0].phone_number
     required: false
+---
+id: user role
+question: |
+  I am:
+fields:
+  - no label: person_filing
+    required: True
+    datatype: radio
+    choices:
+      - "the defendant posting my own bonds.": defendant
+      - "someone else posting on the defendant's behalf.": obo
 ---
 id: Defendant's Information
 question: |
