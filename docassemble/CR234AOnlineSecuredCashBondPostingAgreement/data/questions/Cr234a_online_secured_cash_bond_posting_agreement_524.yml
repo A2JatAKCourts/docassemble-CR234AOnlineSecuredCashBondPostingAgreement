@@ -179,11 +179,11 @@ id: money
 question: |
   ####Do you understand and agree to the following?
   % if person_filing == "obo":
-  1.	I am depositing money as security for the defendant’s bonds.
+  1.	I am depositing money as security for ${ defendants[0].name.first }'s bonds.
   % else:
   1.	I am depositing money as security for my bonds.
   % endif
-  2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to me, this fee will not be returned.
+  2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to me, this fee will **not** be returned.
   3. The bonds continue until the court cancels them.
 fields:
   - I understand and agree.: money_for_bonds
