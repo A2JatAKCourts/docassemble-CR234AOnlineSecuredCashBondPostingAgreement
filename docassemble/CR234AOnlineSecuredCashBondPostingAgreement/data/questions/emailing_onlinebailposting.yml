@@ -86,13 +86,7 @@ subquestion: |
   &nbsp;
 
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
-
-  % if clerk_email_sent_ok:
-  **Note:** Your form was already emailed to the clerk.
-  % else:
-  **Note:** Your form was not emailed to the clerk.
-  % endif
-
+  
 under: |
   ###### **Questions?**  
   ###### If you are wondering about the status of your request to post bail online for an individual, you can send an email inquiry to onlinebailposting@akcourts.gov. Please keep in mind that the court can only reply to the emails during processing hours listed [here](https://courts.alaska.gov/trialcourts/bail.htm). The court replies to all emails as quickly as possible and appreciates your patience.
@@ -110,7 +104,7 @@ subquestion: |
 ---
 id: are you sure
 question: |
-  Your form is ready to email to the clerk.
+  Your form is ready to email to the clerk
 subquestion: |
   When the court gets your form, they will email you. The email includes a link to the webpage where you can pay the bail. 
   
@@ -141,12 +135,15 @@ subquestion: |
   <div class="step-subheading">Note</div>
   This may take several hours.
   
-fields:
-  - "Email your form now?": confirm_email_send_now
-    input type: radio
-    choices: 
-      - Yes, I want to email my form to the clerk now.: True
-      - No, I want to get my form now. I will file it later.: False
+# fields:
+#   - "Email your form now?": confirm_email_send_now
+#     input type: radio
+#     choices: 
+#       - Yes, I want to email my form to the clerk now.: True
+#       - No, I want to get my form now. I will file it later.: False
+# 
+continue button field: confirm_email_send_now
+continue button label: Send email to the clerk
 
 
 under: | 

@@ -36,6 +36,10 @@ metadata:
     - CR-234
   form_numbers: []
   update_notes: |
+  email config: ACS
+---
+code: |
+  AL_ORGANIZATION_TITLE = "Alaska Court System"
 ---
 code: |
   # This controls the default country and list of states in address field questions
@@ -111,14 +115,12 @@ question: |
   My Information:
 fields:
   - First Name: users[0].name.first
-    required: True
   - Middle Name: users[0].name.middle
     required: False
   - Last Name: users[0].name.last
-    required: True
   - Date of Birth: users[0].birthdate
     datatype: date
-    required: True
+    max: ${ today().minus(years=18) }
 ---
 id: User's Information 2
 question: |
