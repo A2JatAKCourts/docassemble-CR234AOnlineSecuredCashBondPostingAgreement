@@ -37,7 +37,7 @@ subquestion: |
 ---
 id: get docs screen
 continue button field: get_docs_screen
-continue button label: ":file-export: Email your form to the clerk"
+continue button label: ":file-export: Email my form to the clerk"
 question: |
   Ready to email your form to the clerk?
 
@@ -76,9 +76,9 @@ question: |
   View and download your form
 subquestion: |
   % if clerk_email_sent_ok:
-  **Note:** Your form was already emailed to the clerk.
+  **Note:** Your form was already submitted to the clerk.
   % else:
-  **Note:** Your form was not emailed to the clerk.
+  **Note:** Your form was not submitted to the clerk.
   % endif
   
   ${ al_user_bundle.download_list_html() }
@@ -98,13 +98,13 @@ buttons:
 id: robot end
 event: robot_end
 question: |
-  Sorry, you cannot email your form.
+  Sorry, you cannot submit your form.
 subquestion: |
   You can go back, download the form, and email it to [onlinebailposting@akcourts.gov](mailto:onlinebailposting@akcourts.gov).
 ---
 id: are you sure
 question: |
-  Your form is ready to email to the clerk
+  Your form is ready to be submitted to the clerk
 subquestion: |
   When the court gets your form, they will email you. The email includes a link to the webpage where you can pay the bail. 
   
@@ -114,19 +114,31 @@ subquestion: |
   % else:
   your
   % endif
-  bail, the court will notify the jail that bail was posted and the jail will begin the process of releasing 
+  bail, the court will update 
   % if person_filing == "obo":
+  ${ defendants[0].name.first }'s 
+  % else:
+  your
+  % endif
+  case records to reflect that bail has been posted. If 
+  % if person_filing == "obo":
+  ${ defendants[0].name.first } is
+  % else:
+  you are
+  % endif
+   in custody, the court will notify the jail that bail was posted and the jail will begin the process of releasing 
+    % if person_filing == "obo":
   ${ defendants[0].name.first }.
   % else:
   you.
-  % endif
+  % endif 
   
   The court only processes requests to post bail online during the following times:
   
   
   **In-custody Defendants**  
   Monday through Friday: 8am to 4pm  
-  Saturday and Sunday: 10am – 3pm
+  Saturday and Sunday: 10am to 3pm
   
   
   **Out-of-custody Defendants**  
@@ -143,7 +155,7 @@ subquestion: |
 #       - No, I want to get my form now. I will file it later.: False
 # 
 continue button field: confirm_email_send_now
-continue button label: Send email to the clerk
+continue button label: Submit form to the clerk
 
 
 under: | 
@@ -187,15 +199,15 @@ code: |
 id: email confirmation page
 continue button field: email_sent
 question: |
-  Email sent to clerk
+  Email submitted to the clerk
 subquestion: |
-  **Your form was sent to the court.**
+  **Your form was submitted to the court.**
   
-  If you sent it during processing hours, the court will contact you shortly with instructions and a link on how to pay bail online. If you sent it outside this time frame, you may need to wait for confirmation until processing hours.
+  If you submitted it during processing hours, the court will contact you shortly with instructions and a link on how to pay bail online. If you sent it outside this time frame, you may need to wait for confirmation until processing hours.
 
   **Important:** Read the reply email from the court for what to do next. 
 
-  To download your form or email them to yourself, click **Next**. It may take a minute to get to the next screen. You do not need to refresh.
+  To download your form or email it to yourself, click **Next**. It may take a minute to get to the next screen. You do not need to refresh.
 ---
 id: email send error
 continue button field: email_not_sent

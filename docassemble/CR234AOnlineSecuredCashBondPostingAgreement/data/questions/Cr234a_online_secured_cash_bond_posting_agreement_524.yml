@@ -120,7 +120,7 @@ fields:
   - Last Name: users[0].name.last
   - Date of Birth: users[0].birthdate
     datatype: date
-    max: ${ today().minus(years=18) }
+    max: ${ today() }
 ---
 id: User's Information 2
 question: |
@@ -262,7 +262,7 @@ validation code: |
 ---
 id: custody defendant obo
 question: |
-  ####If ${ defendants[0].name.first } is in custody, the jail will not release them until the full bond amount has been posted for every case that has a bond requirement.  The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release the defendant.     
+  ####If ${ defendants[0].name.first } is in custody, the jail will not release them until the full bond amount has been posted for every case that has a bond requirement.  The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release ${ defendants[0].name.first}.
 fields:
   - I understand and agree.: custody_obo
     datatype: yesnowide
