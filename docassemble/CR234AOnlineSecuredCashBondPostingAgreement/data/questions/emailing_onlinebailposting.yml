@@ -37,9 +37,9 @@ subquestion: |
 ---
 id: get docs screen
 continue button field: get_docs_screen
-continue button label: ":file-export: Email my form to the clerk"
+continue button label: ":file-export: Next"
 question: |
-  Ready to email your form to the clerk?
+  Ready to submit your form to the clerk?
 
 script: |
   ${ recaptcha_javascript() }
@@ -199,7 +199,7 @@ code: |
 id: email confirmation page
 continue button field: email_sent
 question: |
-  Email submitted to the clerk
+  Form submitted to the clerk
 subquestion: |
   **Your form was submitted to the court.**
   

@@ -108,7 +108,7 @@ question: |
 subquestion: |
   ## Instructions:
   1.  Answer the interview questions.  Your responses to the questions will be used to create the agreement form for you.
-  2. At the end of the interview, click “Email your forms to the clerk” to send your form directly to the court for online bail processing.  You will also be sent a copy of the form to the email address you provide.
+  2. At the end of the interview, click “Submit form to the clerk” to send your form directly to the court for online bail processing.  You can also email yourself a copy of the form for your records.
 ---
 id: User's Information
 question: |
@@ -148,11 +148,10 @@ question: |
   I am:
 fields:
   - no label: person_filing
-    required: True
     datatype: radio
     choices:
       - "the defendant posting my own bonds.": defendant
-      - "someone else posting on the defendant's behalf.": obo
+      - "someone else posting bond for the defendant.": obo
 ---
 id: Defendant's Information
 question: |
@@ -171,11 +170,11 @@ fields:
 id: read CR-233
 question: |     
 fields:
-  - I read the Online Secured Cash Bond Posting Summary (form CR-233) that was sent to me by the court.: read_cr233
+  - I read the Online Secured Cash Bond Posting Summary that the court emailed to me.: read_cr233
     datatype: yesnowide
 validation code: |
   if not read_cr233:
-    validation_error("You cannot continue until you have seleceted that you have read the CR-233.")  
+    validation_error("You cannot continue until you have seleceted that you have read the Summary.")  
 ---
 id: money
 question: |
@@ -221,7 +220,11 @@ code: |
 ---
 id: canceled or refunded bond
 question: |
-  ####The court will send me a check for the canceled bond money at the address I provide.  The money will **not** be refunded on the original credit card used to post the bond.  If I post the bond using another person’s credit card, the refund will go to me, not the holder of the credit card.  I am responsible for telling the credit card holder about this before I pay the bond.      
+  ####The court will send me a check for the canceled bond money at the address I provided.
+  
+  The money will **not** be refunded on the original credit card used to post the bond.
+  
+  If I post the bond using another person’s credit card, the refund will go to me, not the holder of the credit card.  I am responsible for telling the credit card holder about this before I pay the bond.      
 fields:
   - I understand and agree.: send_check
     datatype: yesnowide
@@ -231,7 +234,8 @@ validation code: |
 ---
 id: bond conditions defendant
 question: |
-  ####**If I do not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  The court will send me notice of forfeiture to the mailing or email address I provide.     
+  ####**If I do not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  
+  ####The court will send me notice of forfeiture to the mailing or email address I provide.     
 fields:
   - I understand and agree.: forfeit_deposit_def
     datatype: yesnowide
@@ -242,7 +246,8 @@ validation code: |
 mandatory: True
 id: bond conditions obo
 question: |
-  ####**If ${ defendants[0].name.first } does not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  The court will send me notice of forfeiture to the mailing or email address I provide.      
+  ####**If ${ defendants[0].name.first } does not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.
+  ####The court will send me notice of forfeiture to the mailing or email address I provide.      
 fields:
   - I understand and agree.: forfeit_deposit_obo
     datatype: yesnowide
@@ -252,7 +257,8 @@ validation code: |
 ---
 id: custody defendant
 question: |
-  ####If I am in custody, the jail will not release me until the full bond amount has been posted for every case that has a bond requirement.  The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release me.
+  ####If I am in custody, the jail will not release me until the full bond amount has been posted for every case that has a bond requirement.  
+  ####The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release me.
 fields:
   - I understand and agree.: custody_def
     datatype: yesnowide
@@ -262,7 +268,8 @@ validation code: |
 ---
 id: custody defendant obo
 question: |
-  ####If ${ defendants[0].name.first } is in custody, the jail will not release them until the full bond amount has been posted for every case that has a bond requirement.  The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release ${ defendants[0].name.first}.
+  ####If ${ defendants[0].name.first } is in custody, the jail will not release them until the full bond amount has been posted for every case that has a bond requirement.
+  ####The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release ${ defendants[0].name.first}.
 fields:
   - I understand and agree.: custody_obo
     datatype: yesnowide
@@ -272,7 +279,7 @@ validation code: |
 ---
 id: Update Contact Info
 question: |
-  ####I will tell the court in writing if my email, phone number, or mailing address changes. [Use form [TF-955](https://public.courts.alaska.gov/web/forms/docs/TF-955.pdf).]
+  ####I will tell the court in writing if my email, phone number, or mailing address changes.
 fields:
   - I understand and agree.: contact_info_change
     datatype: yesnowide
