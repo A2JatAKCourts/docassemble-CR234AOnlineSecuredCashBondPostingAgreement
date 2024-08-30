@@ -3,7 +3,7 @@ comment: |
 ---
 # interview order block
 code: |
-  forms_assembling
+  # forms_assembling
   # snapshot_forms
   get_docs_screen
   recaptcha_success # Give it some time to process
@@ -23,23 +23,27 @@ code: |
       email_not_sent
   ending_screen
   mailing_steps = True
+# ---
+#  id: forms assembling
+#  continue button field: forms_assembling
+#  question: |
+#   Almost done
+#  subquestion: |
+#   After you click **Next**, it will take a few moments to finish making your form.
+#   
+#   You do not need to refresh your screen.
+#   
+#   &nbsp;
 ---
-id: forms assembling
-continue button field: forms_assembling
+id: get docs screen
+continue button field: get_docs_screen
+continue button label: ":file-export: Next"
 question: |
   Almost done
 subquestion: |
   After you click **Next**, it will take a few moments to finish making your form.
   
   ###### You do not need to refresh your screen.
-  
-  &nbsp;
----
-id: get docs screen
-continue button field: get_docs_screen
-continue button label: ":file-export: Next"
-question: |
-  Ready to submit your form to the clerk?
 
 script: |
   ${ recaptcha_javascript() }
@@ -144,7 +148,7 @@ subquestion: |
   **Out-of-custody Defendants**  
   Monday through Friday: 8am to 4pm
 
-  <div class="step-subheading">Note</div>
+  **Note:**
   This may take several hours.
   
 # fields:
