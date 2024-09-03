@@ -174,10 +174,9 @@ template: al_user_bundle.send_email_template
 subject: |
   Your court form
 content: |
-  Your form is attached.
-  
-  To check the status of your request to post bail online for an individual, send an email inquiry to [onlinebailposting@akcourts.gov](mailto:onlinebailposting@akcourts.gov). Please keep in mind that the court can only reply to the emails during the processing hours listed above. The court replies to all emails as quickly as possible and appreciates your patience.  
- 
+  A copy of the form you submitted to the online bail posting clerk is attached. 
+
+  If you have any questions or want to check the status of the bail you posted, send an email inquiry to [onlinebailposting@akcourts.gov](mailto:onlinebailposting@akcourts.gov).  Please keep in mind that the court can only reply to the emails during processing hours listed here.  The court replies to all emails as quickly as possible and appreciates your patience. 
 ---
 template: clerk_email
 subject: |
