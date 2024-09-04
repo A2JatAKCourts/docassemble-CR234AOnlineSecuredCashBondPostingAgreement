@@ -108,7 +108,7 @@ question: |
   ##CR-234 Online Secured Cash Bond Posting Agreement
 subquestion: |
   ## Instructions:
-  1.  Answer the interview questions.  Your responses to the questions will be used to create the agreement form for you.
+  1.  Answer the interview questions.  Your responses to the questions will be used to create the agreement form.
   2. At the end of the interview, click “Submit form to the clerk” to send your form directly to the court for online bail processing.  You can also email yourself a copy of the form for your records.
 ---
 id: User's Information
@@ -136,6 +136,7 @@ fields:
   - Zip: users[0].zip
     required: True
   - Email: users[0].email
+    datatype: email
     required: True
   - Cell Phone: users[0].mobile_phone
     required: false
@@ -152,7 +153,7 @@ fields:
     label above field: True
     datatype: radio
     choices:
-      - "the defendant posting my own bonds.": defendant
+      - "the defendant posting my own bond.": defendant
       - "someone else posting bond for the defendant.": obo
 ---
 id: Defendant's Information
@@ -182,12 +183,12 @@ id: money
 question: |
   ####Do you understand and agree to the following?
   % if person_filing == "obo":
-  1.	I am depositing money as security for ${ defendants[0].name.first }'s bonds.
+  1.	I am depositing money as security for ${ defendants[0].name.first }'s bond.
   % else:
-  1.	I am depositing money as security for my bonds.
+  1.	I am depositing money as security for my bond.
   % endif
-  2. Each credit card transaction is assessed a 3% convenience fee.  If the bond is later returned (exonerated) to me, this fee will **not** be returned.
-  3. The bonds continue until the court cancels them.
+  2. Each credit card transaction is assessed a 3% convenience fee.  This fee will **not** be returned to me, even if the amount of the bond is later returned (exonerated) to me.
+  3. The bond continues until the court cancels it.
 fields:
   - I understand and agree.: money_for_bonds
     datatype: yesnowide
@@ -198,15 +199,16 @@ validation code: |
 id: Money Deposit
 question: |
   % if person_filing == "obo":
-  **If ${ defendants[0].name.first } follows** the conditions of the bonds, the court will cancel the bonds. If the court cancels the bonds:
+  **If ${ defendants[0].name.first } follows** the conditions of the bond, the court will cancel the bond.
   % else: 
-  **If I follow** the conditions of the bonds, the court will cancel the bonds. If the court cancels the bonds:
+  **If I follow** the conditions of the bond, the court will cancel the bond.
   % endif
 fields:
-  - no label: money_deposit
+  - If the court cancels the bond what do you want the court to do with your money?: money_deposit
+    label above field: True
     datatype: radio
     code: |
-      money_deposit_choices
+      money_deposit_choices    
 ---
 code: |
   if person_filing == "obo":
@@ -236,7 +238,7 @@ validation code: |
 ---
 id: bond conditions defendant
 question: |
-  ####**If I do not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.  
+  ####**If I do not follow** the conditions of the bond, the court will forfeit the money to the State of Alaska.  
   ####The court will send me notice of forfeiture to the mailing or email address I provide.     
 fields:
   - I understand and agree.: forfeit_deposit_def
@@ -248,7 +250,7 @@ validation code: |
 mandatory: True
 id: bond conditions obo
 question: |
-  ####**If ${ defendants[0].name.first } does not follow** the conditions of the bonds, the court will forfeit the money to the State of Alaska.
+  ####**If ${ defendants[0].name.first } does not follow** the conditions of the bond, the court will forfeit the money to the State of Alaska.
   ####The court will send me notice of forfeiture to the mailing or email address I provide.      
 fields:
   - I understand and agree.: forfeit_deposit_obo
@@ -270,7 +272,7 @@ validation code: |
 ---
 id: custody defendant obo
 question: |
-  ####If ${ defendants[0].name.first } is in custody, the jail will not release them until the full bond amount has been posted for every case that has a bond requirement.
+  ####If ${ defendants[0].name.first } is in custody, the jail will not release ${ defendants[0].name.first } until the full bond amount has been posted for every case that has a bond requirement.
   ####The court will only notify the jail of bond payments made during [online bail processing hours](https://courts.alaska.gov/trialcourts/bail.htm).  It may take the jail a few hours after notification from the court to release ${ defendants[0].name.first}.
 fields:
   - I understand and agree.: custody_obo
